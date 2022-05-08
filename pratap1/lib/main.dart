@@ -1,43 +1,62 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(VaibApp());
 
-class VaibApp extends StatelessWidget {
-  const VaibApp({Key? key}) : super(key: key);
+class VaibApp extends StatefulWidget {
+  VaibApp({Key? key}) : super(key: key);
+
+  @override
+  State<VaibApp> createState() => _VaibAppState();
+}
+
+class _VaibAppState extends State<VaibApp> {
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.brown,
+        primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
           titleTextStyle: const TextStyle(
             fontWeight: FontWeight.w600,
           ),
-          title: const Text(
-            "PRATAP",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
+          title: const Center(
+            child: Text(
+              "FirstApp",
+              style: TextStyle(
+                fontSize: 20,
+              ),
             ),
           ),
           elevation: 4.0,
         ),
-        body: buildContent(),
+        body: currentIndex == 0 ? buildContent() : secondPage(),
         bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: const Color.fromARGB(255, 228, 12, 41),
-            items: const [
-              BottomNavigationBarItem(
-                label: 'home',
-                icon: Icon(Icons.home),
-              ),
-              BottomNavigationBarItem(
-                label: 'settings',
-                icon: Icon(Icons.settings),
-              ),
-            ]),
+          selectedItemColor: const Color.fromARGB(255, 228, 12, 41),
+          items: const [
+            BottomNavigationBarItem(
+              label: 'home',
+              icon: Icon(Icons.home),
+            ),
+            BottomNavigationBarItem(
+              label: 'settings',
+              icon: Icon(Icons.settings),
+            ),
+          ],
+          currentIndex: currentIndex,
+          onTap: (int index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
@@ -155,6 +174,87 @@ class VaibApp extends StatelessWidget {
                         child: Image.asset('images/github_logo.png')),
                   ],
                 )),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container secondPage() {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      color: Colors.grey[300],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            "Settings",
+            textAlign: TextAlign.start,
+            style: TextStyle(
+              fontSize: 40,
+            ),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          CircleAvatar(
+            child: Image.asset('images/vaibhav_profile.png'),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Text(
+                "Username:",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Vaibhav Singh",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Padding(padding: EdgeInsets.only(left: 5.0)),
+              Text(
+                "Email ID:",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "vaibhav@gamil.com",
+                // textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Colors.grey,
+            height: 30.0,
+            indent: 10.0,
+            thickness: 2.0,
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          const ListTile(
+            leading: Icon(Icons.home),
+            title: Text(
+              "Profile Setting",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
+            ),
+            trailing: Icon(Icons.navigate_next),
           ),
         ],
       ),
